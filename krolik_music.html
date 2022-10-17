@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="visual.js"></script>
+<!--    <link href="visual_place.css" rel="stylesheet" type="text/css">-->
 </head>
 <body>
 
@@ -18,6 +20,12 @@
     <source src="music_collection/dir.mp3" type="audio/mpeg">
     Your browser does not support the audio element
 </audio>
+
+<div id="content">
+    <input type="file" id="thefile" accept="audio/*" />
+    <canvas id="canvas"></canvas>
+    <audio id="audio" controls></audio>
+</div>
 
 </body>
 </html>
