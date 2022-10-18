@@ -1,64 +1,37 @@
-window.onload = function() {
-    console.log('1')
-    var file = document.getElementById("thefile");
-    var audio = document.getElementById("audio");
+let analyser
 
-    file.onchange = function() {
-        var files = this.files;
-        audio.src = URL.createObjectURL(files[0]);
-        audio.load();
-        audio.play();
-        var context = new AudioContext();
-        var src = context.createMediaElementSource(audio);
-        var analyser = context.createAnalyser();
+function play_music(track){
+    player.src = track.value
+    player.load();
+    player.play();
 
-        var canvas = document.getElementById("canvas");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        var ctx = canvas.getContext("2d");
+    let context = new AudioContext();
+    let src = context.createMediaElementSource(player);
+    analyser = context.createAnalyser();
 
-        src.connect(analyser);
-        analyser.connect(context.destination);
+    src.connect(analyser);
+    analyser.connect(context.destination);
 
-        analyser.fftSize = 256;
+    analyser.fftSize = 2048;
 
-        var bufferLength = analyser.frequencyBinCount;
-        console.log(bufferLength);
+}
 
-        var dataArray = new Uint8Array(bufferLength);
+function get_volume(){
+    if (!analyser){
+        return 0
+    }
 
-        var WIDTH = canvas.width;
-        var HEIGHT = canvas.height;
+    let sum = 0
+    let dataArray = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(dataArray);
+    // console.log(dataArray[4]/256)
+    // return dataArray[4]/200
+    for (let i = 0; i < analyser.frequencyBinCount; i++) {
+        let barHeight = dataArray[i];
+        sum += barHeight**2
+    }
+    sum = Math.sqrt(sum/analyser.frequencyBinCount)
+    console.log(sum/80)
+    return sum/80
 
-        var barWidth = (WIDTH / bufferLength) * 2.5;
-        var barHeight;
-        var x = 0;
-
-        function renderFrame() {
-            requestAnimationFrame(renderFrame);
-
-            x = 0;
-
-            analyser.getByteFrequencyData(dataArray);
-
-            ctx.fillStyle = "#000";
-            ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
-            for (var i = 0; i < bufferLength; i++) {
-                barHeight = dataArray[i];
-
-                var r = barHeight + (25 * (i/bufferLength));
-                var g = 250 * (i/bufferLength);
-                var b = 50;
-
-                ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-                ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
-
-                x += barWidth + 1;
-            }
-        }
-
-        audio.play();
-        renderFrame();
-    };
-};
+}

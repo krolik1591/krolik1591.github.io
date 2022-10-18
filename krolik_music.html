@@ -4,28 +4,32 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="visual.js"></script>
-<!--    <link href="visual_place.css" rel="stylesheet" type="text/css">-->
+    <script src="p5_draw.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
 </head>
 <body>
 
 <h1>Бахнув конопельки і не знаєш чим зайнятися?</h1>
 <p>Я також!</p>
 
-<audio controls>
-    <source src="music_collection/heyha1.mp3" type="audio/mpeg">
-    Your browser does not support the audio element
-</audio>
+<select onchange="play_music(this)" name="select">
+    <option value="music_collection/heyha1.mp3" selected>Хэй-ха</option>
+    <option value="music_collection/dir.mp3" >dir</option>
+    <option value="music_collection/YaJiv.mp3">я жив</option>
+    <option value="music_collection/пиздецкакойто.mp3">какой-то пиздец</option>
+</select>
 
-<audio controls>
-    <source src="music_collection/dir.mp3" type="audio/mpeg">
-    Your browser does not support the audio element
-</audio>
+<!--<audio controls>-->
+<!--    <source src="music_collection/heyha1.mp3" type="audio/mpeg">-->
+<!--    Your browser does not support the audio element-->
+<!--</audio>-->
 
 <div id="content">
-    <input type="file" id="thefile" accept="audio/*" />
     <canvas id="canvas"></canvas>
-    <audio id="audio" controls></audio>
+
 </div>
+
+<audio id="player" controls></audio>
 
 </body>
 </html>
