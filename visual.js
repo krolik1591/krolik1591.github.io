@@ -1,6 +1,6 @@
 let analyser
 
-function play_music(track){
+function play_music(track) {
     player.src = track.value
     player.load();
     player.play();
@@ -16,8 +16,8 @@ function play_music(track){
 
 }
 
-function get_volume(){
-    if (!analyser){
+function get_volume() {
+    if (!analyser) {
         return 0
     }
 
@@ -28,10 +28,10 @@ function get_volume(){
     // return dataArray[4]/200
     for (let i = 0; i < analyser.frequencyBinCount; i++) {
         let barHeight = dataArray[i];
-        sum += barHeight**2
+        sum += barHeight ** 2
     }
-    sum = Math.sqrt(sum/analyser.frequencyBinCount)
-    console.log(sum/80)
-    return sum/80
+    sum = Math.sqrt(sum / analyser.frequencyBinCount)
+    console.log(sum / 80)
+    return sum / 80
 
 }
